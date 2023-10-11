@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>php-form</title>
+</head>
+<body>
+    <div class="form">
+        <form action="" method="POST">
+            <table>
+            <tr>
+                <td><label for="ID">ID:</label></td>
+                <td><input type="number" name="ID" placeholder="Enter ID"></td>
+            </tr>
+
+            <tr>
+                <td><label for="Name">Name:</label></td>
+                <td><input type="text" name="Name" placeholder="Enter Name"></td>
+            </tr>
+
+            <tr>
+                <td><label for="City">City:</label></td>
+                <td><input type="text" name="City" placeholder="Enter City"></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button type="submit" name="View">View</button>
+                    <button type="submit" name="Insert">Insert</button>
+                    <button type="submit" name="Update">Update</button>
+                    <button type="submit" name="Delete">Delete</button>
+                    <button type="submit" name="Search">Search</button>
+                </td>
+            </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+
+<?php
+$ID = $_POST['ID'];
+$Name = $_POST['Name'];
+$City = $_POST['City'];
+
+$con = new mysqli('localhost', 'root', '', 'xy');
+
+if (isset($_POST['View'])) {
+    $query = "SELECT * FROM py";
+    $cmd = mysqli_query($con, $query);
+
+    while ($set = mysqli_fetch_array($cmd)) {
+        echo "<table>";
+        echo "<tr>";
+        echo "<td>".$set['ID']."</td>";
+        echo "<td>".$set['Name']."</td>";
+        echo "<td>".$set['City']."</td>";
+        echo "</tr>";
+        echo "</table>";
+    }
+} elseif (isset($_POST['Insert'])) {
+    $query = "INSERT INTO py VALUE ($ID, '$Name', '$City')";
+    $cmd = mysqli_query($con, $query);
+} elseif (isset($_POST['Update'])) {
+    $query = "UPDATE py SET Name='$Name', City='$City' WHERE ID=$ID";
+    $cmd = mysqli_query($con, $query);
+} elseif (isset($_POST['Delete'])) {
+    $query = "DELETE FROM py WHERE ID='$ID'";
+    $cmd = mysqli_query($con, $query);
+}elseif (isset($_POST['Search'])) {
+    $searchID = $_POST['ID']; // Get the ID entered in the form
+
+    $query = "SELECT * FROM py WHERE ID = $searchID";
+    $cmd = mysqli_query($con, $query);
+
+    if ($cmd) {
+        while ($set = mysqli_fetch_array($cmd)) {
+            echo "<table>";
+            echo "<tr>";
+            echo "<td>".$set['ID']."</td>";
+            echo "<td>".$set['Name']."</td>";
+            echo "<td>".$set['City']."</td>";
+            echo "</tr>";
+            echo "</table>";
+        }
+    } else {
+        echo "Error: " . mysqli_error($con);
+    }
+}
+
+
+mysqli_close($con);
+?>

@@ -1,0 +1,56 @@
+Patern
+
+row=5
+for ((i=1; i<=row; i++))
+do
+        for ((k=row; k>i; k--))
+        do
+                echo -n "  "
+        done
+        for ((j=1; j<=i; j++))
+        do
+                echo -n "* "
+        done
+        echo
+done
+
+*********************************************
+
+calculater
+
+echo "Enter 1st Number :"
+read n1
+
+echo "Enter 2st Number :"
+read n2
+
+echo "Select Any Opration"
+read op
+
+if [ "$op" = "+" ]; then
+        result=$((n1 + n2))
+
+        echo "$result"
+
+elif [ "$op" = "-" ]; then
+        result=$((n1 - n2))
+
+        echo "$result"
+
+elif [ "$op" = "*" ]; then
+        result=$((n1 * n2))
+
+        echo "$result"
+elif [ "$op" = "/" ]; then
+        if [ "$n2" = 0 ]; then
+                echo "cant Divide zero"
+        else
+                result=$((n1 / n2))
+                echo "$result"
+        fi
+else
+        echo "Erorr"
+
+fi
+
+*********************************************
